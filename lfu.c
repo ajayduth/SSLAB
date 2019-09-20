@@ -1,72 +1,108 @@
 #include<stdio.h>
- 
-int main()
+
+struct memory{
+int pageName;
+int count;
+int flag;
+int time;
+struct memory *next;
+}*header,*ptr,*rear;
+
+struct memory create_memory(int,int,int);
+
+void main()
 {
-      int total_frames, total_pages, hit = 0;
-      int pages[25], frame[10], arr[25], time[25];
-      int m, n, page, flag, k, minimum_time, temp;
-      printf("Enter Total Number of Pages:\t");
-      scanf("%d", &total_pages); 
-      printf("Enter Total Number of Frames:\t");
-      scanf("%d", &total_frames);
-      for(m = 0; m < total_frames; m++)
-      {
-            frame[m] = -1;
-      }
-      for(m = 0; m < 25; m++)
-      {
-            arr[m] = 0;
-      }
-      printf("Enter Values of Reference String\n");
-      for(m = 0; m < total_pages; m++)
-      {
-            printf("Enter Value No.[%d]:\t", m + 1);
-            scanf("%d", &pages[m]);
-      }
-      printf("\n");
-      for(m = 0; m < total_pages; m++)
-      {
-            arr[pages[m]]++;
-            time[pages[m]] = m;
-            flag = 1;
-            k = frame[0];
-            for(n = 0; n < total_frames; n++)
-            {
-                  if(frame[n] == -1 || frame[n] == pages[m])
-                  {
-                        if(frame[n] != -1)
-                        {
-                              hit++;
-                        }
-                        flag = 0;
-                        frame[n] = pages[m];
-                        break;
-                  }
-                  if(arr[k] > arr[frame[n]])
-                  {
-                        k = frame[n];
-                  }
-            }
-            if(flag)
-            {
-                  minimum_time = 25;
-                  for(n = 0; n < total_frames; n++)
-                  {
-                        if(arr[frame[n]] == arr[k] && time[frame[n]] < minimum_time)
-                        {
-                              temp = n;
-                              minimum_time = time[frame[n]];
-                        }
-                  }
-                  arr[frame[temp]] = 0;
-                  frame[temp] = pages[m];
-            }
-            for(n = 0; n < total_frames; n++)
-            {
-                  printf("%d\t", frame[n]);
-            }
-            printf("\n");
-      }
-      printf("Page Hit:\t%d\n", hit);
-      return 0;
+int no_frames, no_pages, frames[10], pages[30], time=0, fault=0;
+printf("Enter number of frames:");
+scanf("%d', &no_frames);
+printf("Enter no of pages:");
+scanf("%d",&no_pages);
+printf("Enter reference string:");
+for(i=0;i<no_pages;i++)
+	scanf("%d",&pages[i]);
+for(i=0;i<no_frames;i++)
+	frames[i]=-1;
+
+//implementing lfu
+for(i=0;i<no_pages;i++)
+	{
+	flag1=flag2=0;
+	for(j=0;j<no_frames;j++)
+		{
+		if(frames[j]==pages[i])
+			{
+			time++;
+			//increment count-update time-flag to 1
+			flag1=flag2=1
+			break;
+			}
+
+		}
+	if(flag1==0;)
+	for(j=0;j<no_frames;j++)
+		{
+		if(frames[j==-1])
+			{
+			time++;
+			//create new memeory- increment count -update time
+			frames[j]=pages[i];
+			flag2=1;
+			break
+			}
+		}
+
+
+
+	}
+
+
+
+}
+
+
+
+struct memory create_memory(int pageName, int count, int time)
+{
+struct memory *node;
+node=(struct memory*)malloc(sizeof(struct memory));
+node->pageName=pageName;
+node->count=count;
+node->flag=0;
+node->time=time;
+if(header==NULL)
+	header=rear=node;
+else
+	{
+	rear->next=node;
+	rear=node;
+	}
+
+return node;
+}
+
+struct memory search_memory(int pageName)
+{
+ptr=header;
+while(ptr!=NULL)
+	{
+	if(ptr->pageName==pageName)break;
+	}
+return ptr;
+}
+
+
+struct memory find_lfu()
+{
+int min=header->count;
+ptr=header;
+while(ptr!=NULL)
+	{
+	if(ptr->count!=0)
+		{
+		if(min > ptr->count)
+		min=ptr->count;
+		}
+	ptr=ptr->next;
+	}
+
 }
