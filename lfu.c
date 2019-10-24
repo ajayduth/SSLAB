@@ -47,7 +47,7 @@ for(i=0;i<no_pages;i++)
 			//create new memeory- increment count -update time
 			frames[j]=pages[i];
 			flag2=1;
-			break
+			break;
 			}
 		}
 
